@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "899732d1-8312-444f-8fb2-3a7d5c6de0f5",
+		"name": "Dogs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List all breeds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Did the breeds appear?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var jsonArray = [];",
+							"    jsonArray.push(jsonData.message)",
+							"    var count = Object.keys(jsonArray[0]).length;",
+							"    pm.expect(count).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Is the status 'Success'?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.equal(\"success\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{breeds}}list/all",
+					"host": [
+						"{{breeds}}list"
+					],
+					"path": [
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Display Multiple Images",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Did the images appear?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var jsonArray = [];",
+							"    jsonArray.push(jsonData.message);",
+							"    var count = Object.keys(jsonArray[0]).length;",
+							"    pm.expect(count).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Is the number of images as requested?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message.length + '').to.be.equal(pm.variables.get(\"number\"));",
+							"    pm.expect(jsonData.code).to.not.equal(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{randomImages}}{{number}}",
+					"host": [
+						"{{randomImages}}{{number}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dog by sub-breed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Does Breed have Sub-Breeds?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message.length).to.be.above(0);",
+							"    pm.expect(jsonData.code).to.not.equal(404);",
+							"",
+							"});",
+							"",
+							"pm.test(\"Is the status 'Success'?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.equal(\"success\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{breedURL}}{{breed}}/list",
+					"host": [
+						"{{breedURL}}{{breed}}"
+					],
+					"path": [
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dog by breed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Is the status 'Success'?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.equal(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Did the images appear?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var jsonArray = [];",
+							"    jsonArray.push(jsonData.message)",
+							"    var count = Object.keys(jsonArray[0]).length",
+							"    pm.expect(count).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{breedURL}}{{dogbreed}}/images",
+					"host": [
+						"{{breedURL}}{{dogbreed}}"
+					],
+					"path": [
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Dog case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Is the status 'Error'?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.be.equal(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Is the error message correct?\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Breed not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{breedURL}}{{archavka}}/images",
+					"host": [
+						"{{breedURL}}{{archavka}}"
+					],
+					"path": [
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get sub-breed and its images",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(pm.variables.get(\"breeds\") + \"list/all\", function (err, response) {",
+							"    var jsonData = response.json();",
+							"    for(i in jsonData) {",
+							"        for (key in jsonData[i]) {",
+							"            var val = jsonData[i][key]",
+							"            if ((val + \"\").length > 0){",
+							"                console.log(val[0]);",
+							"                console.log(key);",
+							"                pm.variables.set(\"subBreedName\", val[0] + \"\");",
+							"                pm.variables.set(\"breedName\", key + \"\")",
+							"                break;",
+							"            }",
+							"        }",
+							"        break;",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response body contains our sub-breed\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"subBreedName\"));",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Did a single image appear?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var jsonArray = [];",
+							"    jsonArray.push(jsonData.message + \"\");",
+							"    pm.expect(jsonArray[0]).to.not.contain(\"[\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{breedURL}}{{breedName}}/{{subBreedName}}/images/random",
+					"host": [
+						"{{breedURL}}{{breedName}}"
+					],
+					"path": [
+						"{{subBreedName}}",
+						"images",
+						"random"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "number",
+			"value": "3"
+		},
+		{
+			"key": "dogbreed",
+			"value": "ovcharka"
+		},
+		{
+			"key": "archavka",
+			"value": "archavka"
+		}
+	]
+}
